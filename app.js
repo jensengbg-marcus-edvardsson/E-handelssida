@@ -10,10 +10,12 @@ const app = express();
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
 
+//Status koder och BodyParser
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+//CORS-felhantering
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', '*');
@@ -24,9 +26,11 @@ app.use((req, res, next) => {
     next();
 });
 
+//Routes
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
 
+// Felkodshantering
 app.use((req, res, next) => {
     const error = new Error('Not found!');
     error.status = 404;
