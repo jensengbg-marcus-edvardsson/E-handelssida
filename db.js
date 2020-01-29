@@ -1,16 +1,11 @@
 const lowdb = require('lowdb');
-const FileAsync = require('lowdb/adapters/FileAsync');
-const adapter = new FileAsync('database.json');
+const FileSync = require('lowdb/adapters/FileSync');
+const adapter = new FileSync('database.json');
 const database = lowdb(adapter);
 
 exports.initiateDatabase = () => {
-    const hasDatabase = database.has('products').value();
-
-    if (!hasDatabase) {
-        database.defaults({ products: [] }).write();
+    let dbInitiated = database.has("products").value();
+    if(!dbInitiated) {
+        database.defaults({ products: [], shoppingCart: [] }).write();
     }
 };
-
-exports.getProducts = () => {
-    return database.get('products').value();
-}
