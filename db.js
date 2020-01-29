@@ -3,6 +3,14 @@ const FileAsync = require('lowdb/adapters/FileAsync');
 const adapter = new FileAsync('database.json');
 const database = lowdb(adapter);
 
-database.defaults({products: []}).write();
+exports.initiateDatabase = () => {
+    const hasDatabase = database.has('products').value();
 
-module.exports = db;
+    if (!hasDatabase) {
+        database.defaults({ products: [] }).write();
+    }
+};
+
+exports.getProducts = () => {
+    return database.get('products').value();
+}

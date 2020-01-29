@@ -1,9 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const low = require('lowdb');
-const FileAsync = require('lowdb/adapters/FileAsync');
 const morgan = require('morgan');
-
+const database = require('./db');
 const app = express();
 
 //Importera Routes
